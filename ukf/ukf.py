@@ -187,36 +187,22 @@ def add_radar_image(ax, image_path, zoom=1):
     ax.add_artist(ab)
 
 
-# Function to draw radar-like circular gridlines
 def draw_radar_background(ax, limits):
     ax.set_facecolor('white')
     ax.set_aspect('equal')
 
-    # Draw concentric circles for the radar grid
     grid_radii = np.linspace(0, max(limits), 5)
     for radius in grid_radii:
         circle = plt.Circle((0, 0), radius, color='gray', fill=False, linestyle=':')
         ax.add_artist(circle)
 
-    # Set limits and grid style
     ax.set_xlim([-max(limits), max(limits)])
     ax.set_ylim([-max(limits), max(limits)])
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['bottom'].set_visible(False)
     ax.spines['left'].set_visible(False)
-    ax.grid(False)  # Turn off the default grid
-
-
-# Custom legend for the radar plot
-def custom_legend(ax):
-    legend_elements = [
-        Patch(facecolor='grey', edgecolor='grey', label='Clutter'),
-        mlines.Line2D([], [], color='red', marker='.', linestyle='None', markersize=10, label='Measured Position'),
-        mlines.Line2D([], [], color='green', marker='-', linestyle='-', markersize=5, label='Updated Position'),
-        mlines.Line2D([], [], color='blue', marker='-', linestyle='-', markersize=5, label='True Position'),
-    ]
-    ax.legend(handles=legend_elements, loc='upper right')
+    ax.grid(False)
 
 
 if __name__ == "__main__":
@@ -265,7 +251,6 @@ if __name__ == "__main__":
 
         #print(P_upd)
 
-        # Plot the points
         plt.plot(Y[0], Y[1], '.', color='grey', markersize=2.5)
         plt.plot(Y[0, 0], Y[1, 0], '.', color='red', markersize=10)
         plt.plot(np.array(ukf.x_upd)[:, 0], np.array(ukf.x_upd)[:, 1], '-', color='red',
